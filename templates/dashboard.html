@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <div class="left-column">
+            <h2>Welcome, {{ user.username }}!</h2>
+            <a href="{{ url_for('goal.declare_goal') }}" class="dashboard-btn">Declare a Goal</a>
+            <a href="{{ url_for('challenge.view_challenges') }}" class="dashboard-btn">Gamified Exercise Challenges</a>
+            <a href="{{ url_for('mood.adjust_mood') }}" class="dashboard-btn">Mood Based Routine Generation</a>
+            <a href="{{ url_for('auth.logout') }}" class="dashboard-btn">Logout</a>
+            
+
+        </div>
+        
+    </div>
+    <div class="right-panel">
+        <h2>Your Lifestyle Journey</h2>
+        <p>Track, challenge, and elevate your personal goals in one dashboard.</p>
+        {% if mood %}
+            <div class="goal-card">
+                <h3>Latest Mood: {{ mood.mood_type }} ({{ mood.timestamp.strftime('%Y-%m-%d') }})</h3>
+                <p><strong>Suggested Routine:</strong><br>{{ routine }}</p>
+            </div>
+            {% else %}
+            <div class="goal-card">
+                <p><strong>No mood recorded yet.</strong><br>Start by adjusting your mood <a href="{{ url_for('mood.adjust_mood') }}">here</a>.</p>
+            </div>
+            {% endif %}
+
+    </div>
+</div>
+</body>
+</html>

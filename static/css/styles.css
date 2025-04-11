@@ -1,0 +1,187 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.left-panel {
+    background-color: #fff;
+    color: black;
+}
+
+.right-panel {
+    background: linear-gradient(to top right, #28b485, #7dd56f);
+    color: white;
+    text-align: center;
+}
+
+.left-column h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.form-box {
+    width: 80%;
+    max-width: 300px;
+}
+
+.form-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 25px;
+    background: #f0f0f0;
+    font-size: 1rem;
+}
+
+.form-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28b485;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-box button:hover {
+    background-color: #239f74;
+}
+
+.secondary-btn {
+    padding: 10px 20px;
+    font-size: 15px;
+    border: 2px solid #2ecc71;
+    background-color: white;
+    color: #2ecc71;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.goal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.goal-card {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.goal-card h3 {
+    margin: 0 0 10px;
+    color: #2ecc71;
+}
+
+.goal-card p {
+    margin: 3px 0;
+    color: #444;
+}
+
+.dashboard-btn {
+    display: block;
+    background-color: #2ecc71;
+    color: white;
+    padding: 15px 20px;
+    margin: 15px auto;
+    text-align: center;
+    border-radius: 30px;
+    width: 300px;
+    font-size: 18px;
+    font-family: 'Segoe UI', sans-serif;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-btn:hover {
+    background-color: #27ae60;
+}
+
+.mood-box, .routine-box {
+    background-color: white;
+    color: black;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    text-align: center;
+}
+
+.routine-box {
+    display: inline-block;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #6c5ce7;
+    text-decoration: none;
+}
+
+.emoji-form button {
+    font-size: 28px;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.emoji-form button:hover {
+    transform: scale(1.2);
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+/* Optional: responsive tweaks */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .dashboard-btn {
+        width: 90%;
+    }
+
+    .left-panel, .right-panel {
+        padding: 20px;
+    }
+
+    .form-box {
+        max-width: 90%;
+    }
+}

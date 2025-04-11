@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Mood</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="left-column">
+                <h2>How are you feeling?</h2>
+                <form method="POST" class="emoji-form">
+                    <button type="submit" name="mood" value="Happy">😊</button>
+                    <button type="submit" name="mood" value="Sad">😢</button>
+                    <button type="submit" name="mood" value="Angry">😠</button>
+                    <button type="submit" name="mood" value="Excited">🤩</button>
+                    <button type="submit" name="mood" value="Tired">🥱</button>
+                </form>
+
+                {% if moods and moods|length > 0 %}
+                <div class="mood-box">
+                    <h3>Your Recent Moods</h3>
+                    <ul>
+                        {% for mood in moods %}
+                            <li><span class="clock-icon">🕒</span> {{ mood.timestamp.strftime("%Y-%m-%d %H:%M") }} — {{ mood.mood_type }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Track Your Emotions</h2>
+            <p>Reflect on your mental well-being by tracking how you feel each day.</p>
+
+            {% if moods and moods|length > 0 %}
+            {% set latest_mood = moods[0] %}
+            <div class="routine-box">
+                <h3>Latest Mood: {{ latest_mood.mood_type }} ({{ latest_mood.timestamp.strftime('%Y-%m-%d') }})</h3>
+                <p><strong>Suggested Routine:</strong><br>
+                {% if latest_mood.mood_type == 'Happy' %}
+                    10 Jumping Jacks, 10 Push-ups, 30s Plank
+                {% elif latest_mood.mood_type == 'Sad' %}
+                    10-min Walk, 15 Squats, 10 Deep Breaths
+                {% elif latest_mood.mood_type == 'Angry' %}
+                    10 Deep Breaths, 10 Lunges per leg, 5 Min Stretch
+                {% elif latest_mood.mood_type == 'Excited' %}
+                    20 Jumping Jacks, 15 High Knees, 20-sec Burpees
+                {% elif latest_mood.mood_type == 'Tired' %}
+                    10 Gentle Stretches, 30s Plank Hold, 5 Wall Sits
+                {% endif %}
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

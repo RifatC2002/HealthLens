@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Declare a Goal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <h2>Declare a New Goal</h2>
+        <div class="form-box">
+            <form method="post">
+                <input type="text" name="title" placeholder="Goal Title" required>
+                <input type="text" name="category" placeholder="Category" required>
+                <input type="date" name="deadline" required>
+                <textarea name="notes" placeholder="Notes (optional)" rows="4"></textarea>
+                <button type="submit">Submit Goal</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="{{ url_for('goal.view_goals') }}">
+                    <button class="secondary-btn">View My Goals</button>
+                </a>
+            </div>
+
+            <p class="alt-link">
+                <a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
+            </p>
+        </div>
+    </div>
+    <div class="right-panel">
+        <h2>Plan with Purpose</h2>
+        <p>Set clear goals and track your progress to success!</p>
+    </div>
+</div>
+</body>
+</html>

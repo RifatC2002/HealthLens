@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise Challenges</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <a href="{{ url_for('challenge.add_challenge') }}" class="dashboard-btn">Add New Challenge</a>
+            <div class="left-column">
+                <h2>Gamified Exercise Challenges</h2>
+                {% if challenges %}
+                <div class="goal-list">
+                    {% for ex in challenges %}
+                    <div class="goal-card">
+                        <h3>{{ ex.name }}</h3>
+                        <p><strong>Level:</strong> {{ ex.level }}</p>
+                        <p><strong>Type:</strong> {{ ex.type }}</p>
+                        <p>{{ ex.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No exercise challenges yet.</p>
+                {% endif %}
+                <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Challenge Yourself</h2>
+            <p>Test your strength and consistency with our daily curated exercise tasks!</p>
+        </div>
+    </div>
+</body>
+</html>

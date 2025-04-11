@@ -1,0 +1,46 @@
+from flask import Flask, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+import os
+
+from models import db
+from routes.auth import auth_bp
+from routes.main import main_bp
+from routes.goal import goal_bp
+from routes.challenge import challenge_bp
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'devkey'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance', 'database.db')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.init_app(app)
+
+from models.user import User
+from models import goal, exercise
+from routes.mood import mood_bp
+from routes.main import main_bp
+
+app.register_blueprint(main_bp)
+app.register_blueprint(mood_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(goal_bp)
+app.register_blueprint(challenge_bp)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.route('/')
+def home():
+    return redirect(url_for('auth.login'))
+
+if __name__ == '__main__':
+    os.makedirs('instance', exist_ok=True)
+    with app.app_context():
+        db.create_all()
+    app.run(port=1640, debug=True)

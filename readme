@@ -1,0 +1,13 @@
+#cd project-folder
+
+
+# Create virtual environment
+#python -m venv venv
+
+# Activate it
+# For Windows:
+#venv\Scripts\activate
+
+#pip install -r requirements.txt
+
+#python app.py
