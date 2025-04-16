@@ -185,3 +185,55 @@ body {
         max-width: 90%;
     }
 }
+.task-form {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+.task-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.task-info {
+    flex: 1;
+}
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+.status-not-started {
+    color: #dc3545;
+}
+.status-in-progress {
+    color: #ffc107;
+}
+.status-completed {
+    color:  #2ecc71;
+}
+
+
+.container {
+    display: flex;
+    gap: 2rem;
+}
+.goal-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}
+.priority-high { color: #dc3545; font-weight: bold; }
+.priority-medium { color: #ffc107; }
+.priority-low { color: #28a745; }
+.task-actions { margin-top: 1rem; }
