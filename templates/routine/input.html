@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="left-panel">
+        <h2>Routine Generator</h2>
+        <form method="POST" class="form-box">
+            <input type="number" name="height" placeholder="Your Height (cm)" required>
+            <input type="number" name="weight" placeholder="Current Weight (kg)" required>
+            <input type="number" name="goal_weight" placeholder="Goal Weight (kg)" required>
+            <input type="number" name="duration" placeholder="Time to Goal (weeks)" required>
+            <input type="number" name="daily_hours" placeholder="Daily Exercise Time (hrs)" required>
+            
+        
+            <button type="submit" name="action" value="suggested">Generate Suggested Routine</button>
+            <button type="submit" name="action" value="manual" class="secondary-btn">Create Custom Routine</button>
+        </form>
+        
+        <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+        <a href="{{ url_for('routine.view_custom_routine') }}" class="secondary-btn">Finish & View Routine</a>
+
+    </div>
+
+    <div class="right-panel">
+        <h2>Auto-create Your Plan</h2>
+        <p>Enter your goals and let us build a basic schedule you can tweak later!</p>
+    </div>
+</div>
+{% endblock %}

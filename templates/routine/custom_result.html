@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="routine-dashboard">
+    <aside class="routine-sidebar">
+        <h2>Routine</h2>
+        <ul>
+            <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('goal.view_goals') }}">Goals</a></li>
+            <li><a href="{{ url_for('routine.routine_input') }}">Generate New</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="routine-main">
+        <header class="routine-header">
+            <h2>Your Custom Routine</h2>
+            <p class="routine-desc">Built manually based on your preferences</p>
+        </header>
+
+        {% if sample %}
+        <div class="routine-grid-cards">
+            {% for day, time, activity in sample %}
+            <div class="routine-box-card">
+                <h4>{{ day }} – {{ time }}</h4>
+                <p>{{ activity }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No routine created.</p>
+        {% endif %}
+
+        <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+    </main>
+</div>
+{% endblock %}

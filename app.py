@@ -24,7 +24,9 @@ from models.user import User
 from models import goal, exercise
 from routes.mood import mood_bp
 from routes.main import main_bp
+from routes.routine import routine_bp
 
+app.register_blueprint(routine_bp)
 app.register_blueprint(main_bp)
 app.register_blueprint(mood_bp)
 app.register_blueprint(auth_bp)

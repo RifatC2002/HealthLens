@@ -11,6 +11,8 @@ class User(UserMixin, db.Model):
     goals = db.relationship('Goal', backref='user', lazy=True)
     challenges = db.relationship('ExerciseChallenge', backref='user', lazy=True)
     moods = db.relationship('Mood', backref='user', lazy=True)
+    routines = db.relationship('Routine', backref='user', lazy=True)
+
 
 
     def set_password(self, password):

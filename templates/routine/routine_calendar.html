@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <h2>Lifestyle</h2>
+        <ul>
+            <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('goal.view_goals') }}">Goals</a></li>
+            <li><a href="{{ url_for('challenge.view_challenges') }}">Challenges</a></li>
+            <li><a href="{{ url_for('routine.routine_input') }}">Routine Generator</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-panel">
+        <div class="top-bar">
+            <h2>My Routine</h2>
+            <span>{{ current_user.username }}</span>
+        </div>
+        <div class="routine-list">
+            {% for r in routines %}
+            <div class="routine-card">
+                <h3>{{ r.day }} – {{ r.time }}</h3>
+                <p>{{ r.activity }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+{% endblock %}

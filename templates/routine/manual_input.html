@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="left-panel">
+        <h2>Create Your Custom Routine</h2>
+        <form method="POST" class="form-box">
+            <input type="text" name="day" placeholder="Day (e.g. Monday)" required>
+            <input type="text" name="time" placeholder="Time (e.g. 8 AM)" required>
+            <input type="text" name="activity" placeholder="Activity (e.g. Jumping Jacks)" required>
+            <button type="submit">Add to Routine</button>
+        </form>
+
+
+        <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <div class="right-panel">
+        {% if routine %}
+        <div class="routine-box">
+            <h3>Current Entries</h3>
+            <ul style="list-style: none; padding: 0;">
+                {% for entry in routine %}
+                <li><strong>{{ entry[0] }}</strong> - {{ entry[1] }} → {{ entry[2] }}</li>
+                {% endfor %}
+            </ul>
+            <form method="POST">
+                <input type="hidden" name="finalize" value="true">
+                <button type="submit" class="secondary-btn">Finish & View Routine</button>
+            </form>
+        </div>
+        {% endif %}
+        <h2>Design It Your Way</h2>
+        <p>Add days, times, and exercises — step-by-step — and we’ll show the summary when you're done.</p>
+    </div>
+</div>
+{% endblock %}
