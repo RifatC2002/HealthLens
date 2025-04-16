@@ -8,6 +8,9 @@ from routes.auth import auth_bp
 from routes.main import main_bp
 from routes.goal import goal_bp
 from routes.challenge import challenge_bp
+from routes.finance import finance_bp
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'devkey'
@@ -30,6 +33,8 @@ app.register_blueprint(mood_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(goal_bp)
 app.register_blueprint(challenge_bp)
+app.register_blueprint(finance_bp)
+
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -185,6 +185,7 @@ body {
         max-width: 90%;
     }
 }
+
 .task-form {
     background: #f4f4f4;
     padding: 20px;
@@ -237,3 +238,4 @@ body {
 .priority-medium { color: #ffc107; }
 .priority-low { color: #28a745; }
 .task-actions { margin-top: 1rem; }
+
