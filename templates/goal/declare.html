@@ -14,6 +14,16 @@
                 <input type="text" name="title" placeholder="Goal Title" required>
                 <input type="text" name="category" placeholder="Category" required>
                 <input type="date" name="deadline" required>
+                <div class="dropdown">
+                    <label for="options">Select your Priority level:</label>
+                    <div class="dropdown-content">
+                    <select name="priority" id="options">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    </div>
+                </div>
                 <textarea name="notes" placeholder="Notes (optional)" rows="4"></textarea>
                 <button type="submit">Submit Goal</button>
             </form>
@@ -23,7 +33,7 @@
                     <button class="secondary-btn">View My Goals</button>
                 </a>
             </div>
-
+            
             <p class="alt-link">
                 <a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
             </p>
