@@ -6,33 +6,95 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-<div class="container">
-    <div class="left-panel">
-        <h2>My Goals</h2>
-        <div class="goal-list">
-            {% if goals %}
-                {% for goal in goals %}
-                <div class="goal-card">
-                    <h3>{{ goal.title }}</h3>
-                    <p><strong>Category:</strong> {{ goal.category }}</p>
-                    <p><strong>Deadline:</strong> {{ goal.deadline.strftime('%Y-%m-%d') }}</p>
-                    {% if goal.notes %}
-                        <p><strong>Notes:</strong> {{ goal.notes }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No goals declared yet.</p>
-            {% endif %}
+    <div class="container">
+        <div class="left-panel">
+            <h2>My Goals</h2>
+            <div class="goal-list">
+                {% if goals %}
+                    {% for goal in goals %}
+                    <div class="goal-card">
+                        <h3>{{ goal.title }}</h3>
+                        <p><strong>Category:</strong> {{ goal.category }}</p>
+                        <p><strong>Priority:</strong> <span class="priority-{{ goal.priority|lower }}">{{ goal.priority }}</span></p>
+                        <p><strong>Deadline:</strong> {{ goal.deadline.strftime('%Y-%m-%d') }}</p>
+                        <p><strong>Status:</strong> {{ 'Completed' if goal.completion else 'In Progress' }}</p>
+                        {% if goal.notes %}
+                            <p><strong>Notes:</strong> {{ goal.notes }}</p>
+                        {% endif %}
+    
+                        <div class="task-actions">
+                            <form action="{{ url_for('goal.update_goal', goal_id=goal.id) }}" method="POST">
+                                <select name="completion" onchange="this.form.submit()">
+                                    <option value="False" {% if not goal.completion %}selected{% endif %}>In Progress</option>
+                                    <option value="True" {% if goal.completion %}selected{% endif %}>Completed</option>
+                                </select>
+                            </form>
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No goals declared yet.</p>
+                {% endif %}
+            </div>
+            <p class="alt-link">
+                <a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
+            </p>
         </div>
-        <p class="alt-link">
-            <a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
-        </p>
+        <div class="right-panel">
+            <h2>Track Your Progress</h2>
+            <p>Review your goals and stay motivated!</p>
+            <div class="progress-container">
+                <h2>Progress:</h2>
+                
+                <div class="progress-stats">
+                    <div class="progress-card">
+                        <h3>Completion</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ completion_rate }}%">
+                                {{ "%.1f"|format(completion_rate) }}%
+                            </div>
+                        </div>
+                    </div>
+                    {&if total_goals == 0 &}
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number">{{ completed_goals }}</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">{{ total_goals - completed_goals }}</span>
+                            <span class="stat-label">Remaining</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">{{total_goals}}</span>
+                            <span class="stat-label">Total Tasks</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="task-breakdown">
+                    <h3>Task Status</h3>
+                    <ul class="task-list">
+                        {% for task in goals %}
+                        <li class="task-item {{ 'completed' if task.is_completed else 'pending' }}">
+                            {{ task.title }} - 
+                            <span class="status-badge">
+                                {{ '✓ Completed' if task.is_completed else '⌛ Pending' }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>            
+            <a href="{{ url_for('goal.declare_goal') }}" class="btn">Add New Goal</a>
+
+        </div>
     </div>
-    <div class="right-panel">
-        <h2>Track Your Progress</h2>
-        <p>Review your goals and stay motivated!</p>
-    </div>
-</div>
+
+
+
+    
+
 </body>
 </html>
