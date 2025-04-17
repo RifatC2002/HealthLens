@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Project_demo\venv"
+VIRTUAL_ENV="C:\Users\Asus\Desktop\BRAC\CSE471\Test\Lifestyle-Management-System\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
