@@ -14,21 +14,27 @@ def declare_goal():
             title = request.form['title']
             category = request.form['category']
             notes = request.form['notes']
-            deadline = datetime.strptime(request.form['deadline'], "%Y-%m-%d").date()
-            priority = request.form.get('priority', 'Medium')
             
+            datetime_str = request.form['timeslot']
+            dt = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
+            deadline = dt.date()
+            start_time = dt.time()
+            priority = int(request.form.get('priority', 1))
+            print("adding")
             goal = Goal(
                 title=title,
                 category=category,
                 deadline=deadline,
                 notes=notes,
                 priority=priority,
-                user_id=current_user.id
+                user_id=current_user.id,
+                start_time = start_time
             )
             
             db.session.add(goal)
             db.session.commit()
-            flash("Goal added successfully!", "success")
+            print("Goal added successfully!", "success")
+            print(goal)
             return redirect(url_for('goal.view_goals'))
         except Exception as e:
             db.session.rollback()
@@ -39,7 +45,7 @@ def declare_goal():
 @goal_bp.route('/')
 @login_required
 def view_goals():
-    user_goals = Goal.query.filter_by(user_id=current_user.id).order_by(Goal.created_at.desc()).all()
+    user_goals = Goal.query.filter_by(user_id=current_user.id).order_by(Goal.priority.asc(), Goal.deadline.asc()).all()
     total_goals = len(user_goals)
     completed_goals = len([g for g in user_goals if g.completion])
     completion_rate = (completed_goals / total_goals * 100) if total_goals > 0 else 0
