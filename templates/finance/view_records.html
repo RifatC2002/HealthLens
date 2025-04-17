@@ -15,7 +15,13 @@
                 <p><strong>Total Expenses:</strong> {{ total_expense }} BDT</p>
                 <p><strong>Current Savings:</strong> {{ savings }} BDT</p>
                 
-                {% if records %}
+                
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Track Your Finances</h2>
+            {% if records %}
                 <div class="goal-list">
                     {% for r in records %}
                     <div class="goal-card">
@@ -33,12 +39,7 @@
                 <p>No finance records yet.</p>
                 {% endif %}
                 <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
-            </div>
-        </div>
-
-        <div class="right-panel">
-            <h2>Track Your Finances</h2>
-            <p>Stay on top of income, expenses, and savings goals with ease.</p>
+            
         </div>
     </div>
 </body>

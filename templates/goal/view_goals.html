@@ -42,21 +42,29 @@
             </p>
         </div>
         <div class="right-panel">
-            <h2>Track Your Progress</h2>
-            <p>Review your goals and stay motivated!</p>
-            <div class="progress-container">
-                <h2>Progress:</h2>
-                
+            <div class="right-panel-content">
+                <h2>Track Your Progress</h2>
+        
+                <!-- Circular Progress Bar -->
+                <div class="progress-container-bar">
+                    <div class="progress-outer">
+                        <div class="progress-inner" style="width: {{ completion_rate }}%;">
+                            {{ "%.1f"|format(completion_rate) }}%
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Completion Stats -->
                 <div class="progress-stats">
                     <div class="progress-card">
                         <h3>Completion</h3>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: {{ completion_rate }}%">
+                            <div class="progress-fill" style="width: {{ completion_rate }}%;">
                                 {{ "%.1f"|format(completion_rate) }}%
                             </div>
                         </div>
                     </div>
-                    {&if total_goals == 0 &}
+        
                     <div class="stats-grid">
                         <div class="stat-card">
                             <span class="stat-number">{{ completed_goals }}</span>
@@ -67,29 +75,38 @@
                             <span class="stat-label">Remaining</span>
                         </div>
                         <div class="stat-card">
-                            <span class="stat-number">{{total_goals}}</span>
+                            <span class="stat-number">{{ total_goals }}</span>
                             <span class="stat-label">Total Tasks</span>
                         </div>
                     </div>
                 </div>
-                
+        
+                <!-- Task Breakdown -->
                 <div class="task-breakdown">
                     <h3>Task Status</h3>
                     <ul class="task-list">
                         {% for task in goals %}
-                        <li class="task-item {{ 'completed' if task.is_completed else 'pending' }}">
-                            {{ task.title }} - 
+                        <li class="task-item {{ 'completed' if task.completion else 'pending' }}">
+                            <strong>{{ task.title }}</strong>
                             <span class="status-badge">
-                                {{ '✓ Completed' if task.is_completed else '⌛ Pending' }}
+                                {% if task.completion %}
+                                    ✅ Completed
+                                {% else %}
+                                    ⏳ Pending
+                                {% endif %}
                             </span>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
-            </div>            
-            <a href="{{ url_for('goal.declare_goal') }}" class="btn">Add New Goal</a>
-
+        
+                <!-- Add Goal Button -->
+                <div class="goal-footer">
+                    <a href="{{ url_for('goal.declare_goal') }}">Add New Goal</a>
+                </div>
+            </div>
         </div>
+        
     </div>
 
 

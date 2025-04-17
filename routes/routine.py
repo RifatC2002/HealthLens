@@ -23,20 +23,23 @@ def routine_input():
         duration = int(request.form.get('duration'))
         daily_hours = int(request.form.get('daily_hours'))
 
+        # Hardcoded routine for now
         sample = [
-            ('Monday', '7 AM', '20 min Cardio'),
-            ('Tuesday', '8 AM', 'Upper Body Workout'),
-            ('Wednesday', '7 AM', 'Yoga & Core'),
-            ('Thursday', '8 AM', 'Lower Body Workout'),
-            ('Friday', '7 AM', 'Stretch + Cardio'),
-            ('Saturday', '8 AM', 'Fun Activity or Walk'),
-            ('Sunday', 'Rest', 'Recovery Day'),
+            ['Monday', '7 AM', '20 min Cardio'],
+            ['Tuesday', '8 AM', 'Upper Body Workout'],
+            ['Wednesday', '7 AM', 'Yoga & Core'],
+            ['Thursday', '8 AM', 'Lower Body Workout'],
+            ['Friday', '7 AM', 'Stretch + Cardio'],
+            ['Saturday', '8 AM', 'Fun Activity or Walk'],
+            ['Sunday', 'Rest', 'Recovery Day'],
         ]
 
         session['routine'] = sample
-        return render_template('routine/result.html', sample=session['routine'])
+        session.modified = True
+        return redirect(url_for('routine.view_custom_routine'))
 
     return render_template('routine/input.html')
+
 
 
 @routine_bp.route('/calendar')
@@ -83,12 +86,15 @@ def update_entry():
     data = request.json
     idx = int(data['index'])
     new_activity = data['new_activity']
+
     if 'routine' in session:
         routine = session['routine']
         if 0 <= idx < len(routine):
+            # Update activity in-place
             routine[idx][2] = new_activity
-            session['routine'] = routine
-            return jsonify(success=True)
+            session['routine'] = routine  # Reassign to trigger session update
+            session.modified = True
+            return jsonify(success=True, routine=routine)
     return jsonify(success=False)
 
 

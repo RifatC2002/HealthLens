@@ -13,12 +13,10 @@
                 <h2>Gamified Exercise Challenges</h2>
                 {% if challenges %}
                 <div class="goal-list">
-                    {% for ex in challenges %}
+                    {% for challenge in challenges %}
                     <div class="goal-card">
-                        <h3>{{ ex.name }}</h3>
-                        <p><strong>Level:</strong> {{ ex.level }}</p>
-                        <p><strong>Type:</strong> {{ ex.type }}</p>
-                        <p>{{ ex.description }}</p>
+                        <h3>{{ challenge.title }}</h3>
+                        <p><strong>Description:</strong> {{ challenge.description }}</p>
                     </div>
                     {% endfor %}
                 </div>

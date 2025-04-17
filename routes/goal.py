@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from models import db
 from models.goal import Goal
 from datetime import datetime
+from sqlalchemy import case
 
 goal_bp = Blueprint('goal', __name__, url_prefix='/goals')
 
@@ -36,14 +37,31 @@ def declare_goal():
     
     return render_template('goal/declare.html')
 
-@goal_bp.route('/')
+@goal_bp.route('/view')
 @login_required
 def view_goals():
-    user_goals = Goal.query.filter_by(user_id=current_user.id).order_by(Goal.created_at.desc()).all()
+    # Define custom priority ordering: High = 1, Medium = 2, Low = 3
+    priority_order = case(
+        (Goal.priority == 'High', 1),
+        (Goal.priority == 'Medium', 2),
+        (Goal.priority == 'Low', 3),
+        else_=4
+    )
+
+    # Fetch all goals, ordered by priority then created_at
+    user_goals = Goal.query.filter_by(user_id=current_user.id) \
+        .order_by(priority_order, Goal.created_at.desc()) \
+        .all()
+
+    completed_goals = sum(1 for g in user_goals if g.completion)
     total_goals = len(user_goals)
-    completed_goals = len([g for g in user_goals if g.completion])
     completion_rate = (completed_goals / total_goals * 100) if total_goals > 0 else 0
-    return render_template('goal/view_goals.html', goals=user_goals, completion_rate = completion_rate, completed_goals = completed_goals, total_goals=total_goals)
+
+    return render_template('goal/view_goals.html',
+                           goals=user_goals,
+                           completed_goals=completed_goals,
+                           total_goals=total_goals,
+                           completion_rate=completion_rate)
 
 @goal_bp.route('/update/<int:goal_id>', methods=['POST'])
 @login_required

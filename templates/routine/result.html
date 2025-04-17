@@ -19,13 +19,13 @@
         </header>
 
         {% if sample %}
-        <div class="routine-grid-cards">
+        <div class="routine-grid-cards" id="routine-container">
             {% for day, time, activity in sample %}
             <div class="routine-box-card" id="card-{{ loop.index0 }}">
                 <h4>{{ day }} – {{ time }}</h4>
                 <p id="activity-{{ loop.index0 }}">{{ activity }}</p>
-                <button class="secondary-btn" onclick="enableEdit('{{ loop.index0 }}')">Edit</button>
-                <button class="secondary-btn" onclick="deleteCard('{{ loop.index0 }}')">Delete</button>
+                <button class="secondary-btn" onclick="enableEdit({{ loop.index0 }})">Edit</button>
+                <button class="secondary-btn" onclick="deleteCard({{ loop.index0 }})">Delete</button>
             </div>
             {% endfor %}
         </div>
@@ -33,74 +33,71 @@
         <p>No routine generated yet.</p>
         {% endif %}
 
-        <!-- Current Entries Summary -->
         <div class="routine-box" style="margin-top: 40px;">
             <h3><strong>Current Entries</strong></h3>
-            {% for day, time, activity in sample %}
-            <p><strong>{{ day }}</strong> - {{ time }} → {{ activity }}</p>
-            {% endfor %}
+            <div id="summary-list">
+                {% for day, time, activity in sample %}
+                <p id="summary-{{ loop.index0 }}"><strong>{{ day }}</strong> - {{ time }} → {{ activity }}</p>
+                {% endfor %}
+            </div>
             <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Finish & View Routine</a>
         </div>
     </main>
 </div>
 
 <script>
-    function enableEdit(index) {
-        const activityPara = document.getElementById(`activity-${index}`);
-        const oldText = activityPara.innerText;
-    
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.value = oldText;
-        newInput.id = `edit-input-${index}`;
-        newInput.className = 'form-input';
-    
-        const saveBtn = document.createElement('button');
-        saveBtn.innerText = 'Save';
-        saveBtn.className = 'secondary-btn';
-        saveBtn.onclick = function () {
-            const updated = newInput.value;
-            fetch('/routine/update_entry', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ index, new_activity: updated })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    activityPara.innerText = updated;
-                    activityPara.style.display = 'block';
-                    inputWrapper.remove();
-                }
-            });
-        };
-    
-        const inputWrapper = document.createElement('div');
-        inputWrapper.appendChild(newInput);
-        inputWrapper.appendChild(saveBtn);
-    
-        activityPara.style.display = 'none';
-        document.getElementById(`card-${index}`).appendChild(inputWrapper);
-    }
-    
-    function deleteCard(index) {
-        fetch('/routine/delete_entry', {
+function enableEdit(index) {
+    const activityPara = document.getElementById(`activity-${index}`);
+    const oldText = activityPara.innerText;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = oldText;
+    input.className = 'form-input';
+    input.id = `edit-input-${index}`;
+
+    const saveBtn = document.createElement('button');
+    saveBtn.innerText = 'Save';
+    saveBtn.className = 'secondary-btn';
+    saveBtn.onclick = () => {
+        const newActivity = input.value;
+        fetch('/routine/update_entry', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ index })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ index, new_activity: newActivity })
         })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                const card = document.getElementById(`card-${index}`);
-                if (card) card.remove();
+                activityPara.innerText = newActivity;
+                document.getElementById(`summary-${index}`).innerText = `${document.querySelector(`#card-${index} h4`).innerText} → ${newActivity}`;
+                activityPara.style.display = 'block';
+                wrapper.remove();
             }
         });
-    }
-    </script>
-    
+    };
+
+    const wrapper = document.createElement('div');
+    wrapper.appendChild(input);
+    wrapper.appendChild(saveBtn);
+
+    activityPara.style.display = 'none';
+    activityPara.parentElement.appendChild(wrapper);
+}
+
+function deleteCard(index) {
+    fetch('/routine/delete_entry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ index })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`card-${index}`).remove();
+            document.getElementById(`summary-${index}`).remove();
+        }
+    });
+}
+</script>
 {% endblock %}

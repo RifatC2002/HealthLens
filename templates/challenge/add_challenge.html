@@ -10,10 +10,20 @@
         <div class="left-panel">
             <h2>Add New Exercise Challenge</h2>
             <form method="POST" class="form-box">
-                <input type="text" name="title" placeholder="Challenge Title" required>
-                <textarea name="description" placeholder="Challenge Description" required style="width:100%; padding:12px; margin-top:10px; border-radius:10px;"></textarea>
+                <div class="form-group">
+                    <label for="title">Challenge Title</label>
+                    <input type="text" id="title" name="title" placeholder="Challenge Title" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="description">Challenge Description</label>
+                    <textarea id="description" name="description" placeholder="Challenge Description" required
+                        style="width:100%; padding:12px; margin-top:10px; border-radius:10px;"></textarea>
+                </div>
+            
                 <button type="submit">Add Challenge</button>
             </form>
+            
             <a href="{{ url_for('challenge.view_challenges') }}" class="back-link">← Back to Challenges</a>
         </div>
         <div class="right-panel">
