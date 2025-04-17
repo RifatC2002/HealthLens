@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <title>Declare a Goal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
 <div class="container">
     <div class="left-panel">
         <h2>Declare a New Goal</h2>
         <div class="form-box">
-            <form method="post">
+            <form method="POST">
                 <input type="text" name="title" placeholder="Goal Title" required>
                 <input type="text" name="category" placeholder="Category" required>
-                <input type="date" name="deadline" required>
-
-                <label for="priority" style="margin-top: 10px; display: block;">Select your Priority level:</label>
-                <select name="priority" id="priority" class="form-box">
-                    <option value="High">High</option>
-                    <option value="Medium" selected>Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-
-                <textarea name="notes" placeholder="Notes (optional)" rows="4"></textarea>
+                <input type="text" class="datetime-picker" name="timeslot" required>
+                <div class="dropdown">
+                    <label for="options">Select your Priority level:</label>
+                    <div class="dropdown-content">
+                    <select name="priority" id="options">
+                        <option class="priority-high" value="0">High</option>
+                        <option class="priority-medium" value="1">Medium</option>
+                        <option class="priority-low" value="2">Low</option>
+                    </select>
+                    </div>
+                </div>
+                <textarea name="notes" placeholder="Notes (optional)" rows="2"></textarea>
                 <button type="submit">Submit Goal</button>
             </form>
 
@@ -31,17 +35,26 @@
                     <button class="secondary-btn">View My Goals</button>
                 </a>
             </div>
-
+            
             <p class="alt-link">
                 <a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
             </p>
         </div>
     </div>
-
     <div class="right-panel">
         <h2>Plan with Purpose</h2>
         <p>Set clear goals and track your progress to success!</p>
     </div>
 </div>
+
+
+
+<script>
+    flatpickr(".datetime-picker", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        minDate: "today"
+    });
+</script>
 </body>
 </html>
