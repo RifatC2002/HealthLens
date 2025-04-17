@@ -25,6 +25,9 @@ from models import goal, exercise
 from routes.mood import mood_bp
 from routes.main import main_bp
 from routes.routine import routine_bp
+from routes.finance import finance_bp
+app.register_blueprint(finance_bp)
+
 
 app.register_blueprint(routine_bp)
 app.register_blueprint(main_bp)

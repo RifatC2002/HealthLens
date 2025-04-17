@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <a href="{{ url_for('finance.add_finance') }}" class="dashboard-btn">Add New Record</a>
+            <div class="left-column">
+                <h2>My Finance Records</h2>
+                <p><strong>Total Income:</strong> {{ total_income }} BDT</p>
+                <p><strong>Total Expenses:</strong> {{ total_expense }} BDT</p>
+                <p><strong>Current Savings:</strong> {{ savings }} BDT</p>
+                
+                {% if records %}
+                <div class="goal-list">
+                    {% for r in records %}
+                    <div class="goal-card">
+                        <h3>{{ r.category }} ({{ r.type|capitalize }})</h3>
+                        <p><strong>Amount:</strong> {{ r.amount }} BDT</p>
+                        <p><strong>Date:</strong> {{ r.date }}</p>
+                        <p>{{ r.description or 'No description.' }}</p>
+                        <form method="POST" action="{{ url_for('finance.delete_finance', record_id=r.id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No finance records yet.</p>
+                {% endif %}
+                <a href="{{ url_for('main.dashboard') }}" class="back-link">← Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Track Your Finances</h2>
+            <p>Stay on top of income, expenses, and savings goals with ease.</p>
+        </div>
+    </div>
+</body>
+</html>
