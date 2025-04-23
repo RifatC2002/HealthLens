@@ -15,9 +15,14 @@
                     <div class="goal-card">
                         <h3>{{ goal.title }}</h3>
                         <p><strong>Category:</strong> {{ goal.category }}</p>
-                        <p><strong>Priority:</strong> <span class="priority-{{ goal.priority|lower }}">{{ goal.priority }}</span></p>
+                        <p><strong>Priority:</strong> <span class="priority-{{ goal.priority|lower }}">{% if goal.priority == 0 %}High
+                            {% elif goal.priority == 1 %}Medium
+                            {% else %}Low
+                            {% endif %}</span></p>
                         <p><strong>Deadline:</strong> {{ goal.deadline.strftime('%Y-%m-%d') }}</p>
+                        <p><strong>Timeslot:</strong> {{ goal.start_time.strftime('%H:%M') }} </p>
                         <p><strong>Status:</strong> {{ 'Completed' if goal.completion else 'In Progress' }}</p>
+
                         {% if goal.notes %}
                             <p><strong>Notes:</strong> {{ goal.notes }}</p>
                         {% endif %}

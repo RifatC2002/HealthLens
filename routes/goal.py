@@ -15,21 +15,27 @@ def declare_goal():
             title = request.form['title']
             category = request.form['category']
             notes = request.form['notes']
-            deadline = datetime.strptime(request.form['deadline'], "%Y-%m-%d").date()
-            priority = request.form.get('priority', 'Medium')
             
+            datetime_str = request.form['timeslot']
+            dt = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
+            deadline = dt.date()
+            start_time = dt.time()
+            priority = int(request.form.get('priority', 1))
+            print("adding")
             goal = Goal(
                 title=title,
                 category=category,
                 deadline=deadline,
                 notes=notes,
                 priority=priority,
-                user_id=current_user.id
+                user_id=current_user.id,
+                start_time = start_time
             )
             
             db.session.add(goal)
             db.session.commit()
-            flash("Goal added successfully!", "success")
+            print("Goal added successfully!", "success")
+            print(goal)
             return redirect(url_for('goal.view_goals'))
         except Exception as e:
             db.session.rollback()

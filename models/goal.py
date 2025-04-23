@@ -9,6 +9,7 @@ class Goal(db.Model):
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    priority = db.Column(db.String(10), default='Medium')
+    priority = db.Column(db.Integer, default=1)
     completion = db.Column(db.Boolean, default=False)
+    start_time = db.Column(db.Time)
 
