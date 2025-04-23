@@ -8,6 +8,7 @@ from routes.auth import auth_bp
 from routes.main import main_bp
 from routes.goal import goal_bp
 from routes.challenge import challenge_bp
+from routes.distraction import distraction_bp 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'devkey'
@@ -27,8 +28,10 @@ from routes.main import main_bp
 from routes.routine import routine_bp
 from routes.finance import finance_bp
 app.register_blueprint(finance_bp)
+from routes.distraction import distraction_bp
 
 
+app.register_blueprint(distraction_bp)  
 app.register_blueprint(routine_bp)
 app.register_blueprint(main_bp)
 app.register_blueprint(mood_bp)

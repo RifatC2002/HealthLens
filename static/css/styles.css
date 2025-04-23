@@ -356,3 +356,145 @@ body {
     flex: 1;
     padding: 40px;
 }
+
+/* ==== DISTRACTION PAGE - VIBRANT STYLE ==== */
+
+.distraction-left {
+    background: linear-gradient(to bottom right, #d5ece6, #10ac84);
+    color: rgb(4, 0, 0);
+}
+
+.distraction-right {
+    background: linear-gradient(to top left, #dfeae7, #dae1d9);
+    color: rgb(44, 8, 8);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.technique-box {
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.technique-box h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #0f0707;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.tip-card-vibrant {
+    background-color: #27e3b1;
+    padding: 25px;
+    border-left: 6px solid #00b894;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    color: #2f3542;
+}
+
+.tip-card-vibrant h3 {
+    font-size: 20px;
+    color: #040c0b;
+    margin-bottom: 10px;
+}
+
+.tip-card-vibrant p {
+    color: #444;
+    line-height: 1.5;
+}
+
+.tip-card-vibrant a {
+    color: #006266;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    background: #a2f0cb;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.tip-card-vibrant a:hover {
+    background: #668b79;
+}
+
+.technique-list {
+    margin-top: 20px;
+    padding-left: 20px;
+    color: rgb(37, 16, 16);
+    line-height: 1.7;
+}
+
+.technique-list li {
+    margin-bottom: 10px;
+}
+
+.back-dashboard-btn {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #ffffff;
+    color: #2e86de;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.back-dashboard-btn:hover {
+    background-color: #dff9fb;
+    color: #130f40;
+}
+
+/* Sidebar Container */
+.styled-sidebar {
+    width: 250px;
+    background: linear-gradient(to bottom right, #2ecc71, #27ae60);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Sidebar Title */
+.sidebar-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+/* Sidebar Navigation Buttons */
+.nav-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 14px 20px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    text-align: left;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(5px);
+}
+
+/* Ensure body and parent layout are flex if needed */
+body {
+    display: flex;
+    margin: 0;
+}

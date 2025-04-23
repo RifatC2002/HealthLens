@@ -2,15 +2,14 @@
 
 {% block content %}
 <div class="routine-dashboard">
-    <aside class="routine-sidebar">
-        <h2>Routine</h2>
-        <ul>
-            <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('goal.view_goals') }}">Goals</a></li>
-            <li><a href="{{ url_for('routine.routine_input') }}">Generate New</a></li>
-            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-        </ul>
+    <aside class="styled-sidebar">
+        <h2 class="sidebar-title">Routine</h2>
+        <a href="{{ url_for('main.dashboard') }}" class="nav-btn">Dashboard</a>
+        <a href="{{ url_for('goal.view_goals') }}" class="nav-btn">Goals</a>
+        <a href="{{ url_for('routine.routine_input') }}" class="nav-btn">Generate New</a>
+        <a href="{{ url_for('auth.logout') }}" class="nav-btn">Logout</a>
     </aside>
+    
 
     <main class="routine-main">
         <header class="routine-header">
@@ -40,10 +39,11 @@
                 <p id="summary-{{ loop.index0 }}"><strong>{{ day }}</strong> - {{ time }} → {{ activity }}</p>
                 {% endfor %}
             </div>
-            <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Finish & View Routine</a>
+            <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">Back to dashboard</a>
         </div>
     </main>
 </div>
+
 
 <script>
 function enableEdit(index) {

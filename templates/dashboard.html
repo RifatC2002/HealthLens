@@ -133,6 +133,7 @@
         <a href="{{ url_for('mood.adjust_mood') }}" class="nav-btn">Mood Routine</a>
         <a href="{{ url_for('routine.routine_input') }}" class="nav-btn">Routine</a>
         <a href="{{ url_for('finance.view_finances') }}" class="nav-btn">Finance</a>
+        <a href="{{ url_for('distraction.show_techniques') }}" class="nav-btn">Focus Techniques</a>
         <a href="{{ url_for('auth.logout') }}" class="nav-btn">Logout</a>
     </div>
 
@@ -191,7 +192,7 @@
             {% if finances %}
             <div class="card">
                 <h3>Latest Expense: {{ finances[-1].category }}</h3>
-                <p><strong>Amount:</strong> ${{ finances[-1].amount }}</p>
+                <p><strong>Amount:</strong> BDT {{ finances[-1].amount }}</p>
                 <p><strong>Date:</strong> {{ finances[-1].date.strftime('%Y-%m-%d') }}</p>
             </div>
             {% else %}
