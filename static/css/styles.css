@@ -498,3 +498,59 @@ body {
     display: flex;
     margin: 0;
 }
+
+/* ========== STREAK TRACKER STYLES ========== */
+
+.streak-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #eafaf1;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.streak-container h2 {
+    text-align: center;
+    color: #2f3542;
+    margin-bottom: 30px;
+}
+
+.streak-card {
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #2ecc71;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.streak-card h3 {
+    margin-bottom: 10px;
+    color: #2f3542;
+}
+
+.streak-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.streak-bar-outer {
+    width: 100%;
+    height: 28px;
+    background-color: #dff0dc;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.streak-bar-inner {
+    height: 100%;
+    background-color: #2ecc71;
+    line-height: 28px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px 0 0 30px;
+    transition: width 0.5s ease-in-out;
+}

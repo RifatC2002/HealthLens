@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Streaks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="routine-dashboard">
+        <aside class="routine-sidebar">
+            <h2 style="color: white;">Streaks</h2>
+            <a href="{{ url_for('main.dashboard') }}" class="nav-btn">Dashboard</a>
+        </aside>
+
+        <main class="routine-main">
+            <h2>Your Progress Streaks</h2>
+            <div class="dashboard-grid">
+                {% for s in streaks %}
+                <div class="card">
+                    <h3>{{ s.type.capitalize() }} Streak</h3>
+                    <p>{{ s.current_streak }} days</p>
+                    <p>Last Updated: {{ s.last_updated.strftime('%Y-%m-%d') }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

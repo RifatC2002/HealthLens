@@ -36,6 +36,8 @@ from routes.routine import routine_bp
 from routes.finance import finance_bp
 from routes.microsave import microsave_bp
 from routes.social import social_bp
+from routes.streak import streak_bp
+
 
 
 #from models.user import User
@@ -58,6 +60,7 @@ app.register_blueprint(challenge_bp)
 app.register_blueprint(finance_bp)
 app.register_blueprint(microsave_bp)
 app.register_blueprint(social_bp)
+app.register_blueprint(streak_bp)
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Streak Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="streak-container">
+        <h2>Daily Streak Progress</h2>
+
+        {% for streak in streaks %}
+        <div class="streak-card">
+            <h3>{{ streak.title }}</h3>
+            <div class="streak-bar-outer">
+                <div class="streak-bar-inner" style="width: {{ streak.percentage }}%">
+                    {{ streak.percentage }}%
+                </div>
+            </div>
+            <p>{{ streak.description }}</p>
+        </div>
+        {% endfor %}
+
+        <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>
