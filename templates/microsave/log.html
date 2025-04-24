@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Micro-Savings Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Left Panel: Set Goal + Summary -->
+        <div class="left-panel">
+            <a href="{{ url_for('microsave.add_micro_saving') }}" class="dashboard-btn">Add New Entry</a>
+
+            <div class="left-column">
+                <h2>My Micro-Savings</h2>
+                <p><strong>Total Saved:</strong> {{ total_saved or 0 }} BDT</p>
+
+                <!-- Goal Form -->
+                <form method="POST" action="{{ url_for('microsave.set_goal') }}">
+                    <input type="number" step="0.01" name="goal_amount" placeholder="Monthly Goal (BDT)" required>
+                    <button type="submit" class="dashboard-btn" style="margin-top: 10px;">Set Goal</button>
+                </form>
+
+                {% if goal_amount %}
+                    <p style="margin-top: 15px;"><strong>Goal:</strong> {{ goal_amount }} BDT</p>
+                    <div style="background: #eee; height: 20px; border-radius: 8px; overflow: hidden; width: 100%;">
+                        <div style="background: #28b485; width: {{ progress_percent }}%; height: 100%;"></div>
+                    </div>
+                    <p>{{ progress_percent }}% achieved</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Panel: Entry List -->
+        <div class="right-panel">
+            <h2>Stay Consistent</h2>
+            {% if entries %}
+                <div class="goal-list">
+                    {% for entry in entries %}
+                    <div class="goal-card">
+                        <h3>{{ entry.amount }} BDT</h3>
+                        <p><strong>Date:</strong> {{ entry.date.strftime('%Y-%m-%d') if entry.date else 'N/A' }}</p>
+                        <p>{{ entry.description or 'No description.' }}</p>
+                        <form method="POST" action="{{ url_for('microsave.delete_micro_saving', entry_id=entry.id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No micro-savings recorded yet.</p>
+            {% endif %}
+            <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">← Back to Dashboard</a>
+        </div>
+
+    </div>
+</body>
+</html>

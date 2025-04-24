@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Micro-Saving</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Add Micro-Saving</h2>
+            <form method="POST" class="form-box">
+                <input type="number" step="0.01" name="amount" placeholder="Amount in BDT" required>
+                <textarea name="description" placeholder="Optional Description" style="width:100%; padding:12px; margin-top:10px; border-radius:10px;"></textarea>
+                <button type="submit">Save Entry</button>
+            </form>
+            <a href="{{ url_for('microsave.view_micro_savings') }}" class="back-link">← Back to Micro-Savings Log</a>
+        </div>
+        <div class="right-panel">
+            <h2>Reward Your Progress</h2>
+            <p>Log symbolic savings to track consistency and boost your motivation.</p>
+        </div>
+    </div>
+</body>
+</html>

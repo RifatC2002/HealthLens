@@ -4,11 +4,13 @@ from flask_login import LoginManager
 import os
 
 from models import db
-from routes.auth import auth_bp
-from routes.main import main_bp
-from routes.goal import goal_bp
-from routes.challenge import challenge_bp
-from routes.distraction import distraction_bp 
+#from routes.auth import auth_bp
+#from routes.main import main_bp
+#from routes.goal import goal_bp
+#from routes.challenge import challenge_bp
+#from routes.distraction import distraction_bp
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'devkey'
@@ -23,13 +25,28 @@ login_manager.init_app(app)
 
 from models.user import User
 from models import goal, exercise
-from routes.mood import mood_bp
+
+from routes.auth import auth_bp
 from routes.main import main_bp
+from routes.goal import goal_bp
+from routes.challenge import challenge_bp
+from routes.distraction import distraction_bp
+from routes.mood import mood_bp
 from routes.routine import routine_bp
 from routes.finance import finance_bp
-app.register_blueprint(finance_bp)
-from routes.distraction import distraction_bp
+from routes.microsave import microsave_bp
+from routes.social import social_bp
 
+
+#from models.user import User
+#from models import goal, exercise
+#from routes.mood import mood_bp
+#from routes.main import main_bp
+#from routes.routine import routine_bp
+#from routes.finance import finance_bp
+#from routes.microsave import microsave_bp
+#from routes.distraction import distraction_bp
+#from routes.social import social_bp
 
 app.register_blueprint(distraction_bp)  
 app.register_blueprint(routine_bp)
@@ -38,6 +55,9 @@ app.register_blueprint(mood_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(goal_bp)
 app.register_blueprint(challenge_bp)
+app.register_blueprint(finance_bp)
+app.register_blueprint(microsave_bp)
+app.register_blueprint(social_bp)
 
 @login_manager.user_loader
 def load_user(user_id):

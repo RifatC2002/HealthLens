@@ -133,7 +133,9 @@
         <a href="{{ url_for('mood.adjust_mood') }}" class="nav-btn">Mood Routine</a>
         <a href="{{ url_for('routine.routine_input') }}" class="nav-btn">Routine</a>
         <a href="{{ url_for('finance.view_finances') }}" class="nav-btn">Finance</a>
+        <a href="{{ url_for('microsave.view_micro_savings') }}" class="nav-btn">Micro-Savings</a>
         <a href="{{ url_for('distraction.show_techniques') }}" class="nav-btn">Focus Techniques</a>
+        <a href="{{ url_for('social.view_contacts') }}" class="nav-btn">Social Sync Tracker</a>
         <a href="{{ url_for('auth.logout') }}" class="nav-btn">Logout</a>
     </div>
 
@@ -187,6 +189,37 @@
                 Visit <a href="{{ url_for('challenge.view_challenges') }}">Add challenges</a> to add.</p>
             </div>
             {% endif %}
+
+            <!-- Social Sync Tracker Card -->
+            {% if contacts %}
+            {% set overdue = [] %}
+            {% for c in contacts %}
+                {% if (today - c.last_contacted).days > c.reminder_days %}
+                    {% set _ = overdue.append(c.name) %}
+                {% endif %}
+            {% endfor %}
+            <div class="card">
+                <h3>Social Sync Tracker</h3>
+                {% if overdue %}
+                    <p><strong>You haven't connected with:</strong></p>
+                    <ul>
+                        {% for name in overdue %}
+                            <li>{{ name }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p><a href="{{ url_for('social.view_contacts') }}">Reconnect Now</a></p>
+                {% else %}
+                    <p>✅ You're up-to-date with everyone!</p>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="card">
+                <p><strong>No contacts added yet.</strong><br>
+                Start tracking your social circle <a href="{{ url_for('social.view_contacts') }}">here</a>.</p>
+            </div>
+            {% endif %}
+
+
         
             <!-- Finance Card -->
             {% if finances %}

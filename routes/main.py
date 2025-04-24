@@ -4,6 +4,8 @@ from models.mood import Mood
 from models.goal import Goal
 from models.finance import FinanceRecord
 from models.exercise import ExerciseChallenge
+from models.social import SocialContact
+from datetime import date
 from collections import defaultdict
 
 main_bp = Blueprint('main', __name__)
@@ -41,6 +43,9 @@ def dashboard():
     chart_labels = list(category_totals.keys())
     chart_values = [round(category_totals[label], 2) for label in chart_labels]
 
+    contacts = SocialContact.query.filter_by(user_id=current_user.id).all()
+    today = date.today()
+
     return render_template(
         "dashboard.html",
         user=current_user,
@@ -50,5 +55,7 @@ def dashboard():
         challenge=challenge,
         finances=finance_records,
         chart_labels = list(category_totals.keys()),
-        chart_values = [round(category_totals[k], 2) for k in chart_labels]
+        chart_values = [round(category_totals[k], 2) for k in chart_labels],
+        contacts=contacts, 
+        today=today 
     )

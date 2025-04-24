@@ -12,6 +12,9 @@ class User(UserMixin, db.Model):
     challenges = db.relationship('ExerciseChallenge', backref='user', lazy=True)
     moods = db.relationship('Mood', backref='user', lazy=True)
     routines = db.relationship('Routine', backref='user', lazy=True)
+    microsavings = db.relationship('MicroSaving', backref='user', lazy=True)
+
+
 
 
 

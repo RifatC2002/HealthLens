@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Sync Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div class="container">
+
+    <!-- Left Panel -->
+    <div class="left-panel">
+        <a href="{{ url_for('social.add_contact') }}" class="dashboard-btn">Add New Contact</a>
+        <div class="left-column">
+            <h2>My Contacts</h2>
+            <p>Stay emotionally connected by tracking meaningful check-ins with your loved ones.</p>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+        <h2>Social Sync Tracker</h2>
+        {% if contacts %}
+            <div class="goal-list">
+                {% for c in contacts %}
+                <div class="goal-card">
+                    <h3>{{ c.name }} ({{ c.relationship or 'No label' }})</h3>
+                    <p><strong>Days since last contact:</strong> {{ (today - c.last_contacted).days }} days</p>
+                    <p><strong>Reminder cycle:</strong> Every {{ c.reminder_days }} days</p>
+                    <p><strong>Notes:</strong> {{ c.notes or '—' }}</p>
+
+                    {% if (today - c.last_contacted).days > c.reminder_days %}
+                        <p style="color: red;">⚠️ It's time to reconnect!</p>
+                    {% endif %}
+
+                    <form method="POST" action="{{ url_for('social.reset_contact', id=c.id) }}">
+                        <button type="submit">Just Reached Out</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('social.delete_contact', id=c.id) }}" style="margin-top: 5px;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No contacts yet. Start by <a href="{{ url_for('social.add_contact') }}">adding one</a>.</p>
+        {% endif %}
+        <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">← Back to Dashboard</a>
+    </div>
+
+</div>
+</body>
+</html>

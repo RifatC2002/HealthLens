@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div class="container">
+
+    <!-- Left Panel: Form -->
+    <div class="left-panel">
+        <h2>Add New Contact</h2>
+        <form method="POST" class="form-box">
+            <input type="text" name="name" placeholder="Contact Name" required>
+            <input type="text" name="relationship" placeholder="Relationship (e.g., Friend, Sister)">
+            <input type="number" name="reminder_days" placeholder="Reminder Interval (e.g., 7)" required>
+            <input type="number" name="days_ago" placeholder="Last contacted (days ago)">
+            <textarea name="notes" placeholder="Optional notes" rows="2"></textarea>
+            <button type="submit">Add Contact</button>
+        </form>
+        <a href="{{ url_for('social.view_contacts') }}" class="back-dashboard-btn">← Back to Contacts</a>
+    </div>
+
+    <!-- Right Panel: Info -->
+    <div class="right-panel">
+        <h2>Build Your Circle</h2>
+        <p>Keep in touch with the people who matter most. Add someone you want to stay connected with and let the system remind you when it's time to reach out.</p>
+    </div>
+
+</div>
+</body>
+</html>
