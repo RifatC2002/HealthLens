@@ -41,3 +41,46 @@ def get_focus_tip():
             "description": "Breathe deeply for 2 minutes to reset your focus.",
             "category": "Mindfulness"
         }
+def get_mood_routine(mood):
+    prompt = (
+        f"Suggest a simple fitness routine for someone feeling {mood}. Suggest activities that are common and known to general people "
+        "Keep it short, and return only the routine string. Example: '10-min walk, 15 squats, 5 deep breaths'"
+    )
+
+    try:
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+        response = model.generate_content(prompt, generation_config={"temperature": 1.0})
+        return response.text.strip()
+    except Exception:
+        return "10-min walk, 15 squats, 5 deep breaths"
+
+def generate_routine_based_on_inputs(height, weight, goal_weight, duration, daily_hours):
+    import json
+
+    prompt = (
+    f"You're a fitness coach. Generate a 7-day workout routine based on:\n"
+    f"Height: {height} cm, Weight: {weight} kg, Goal: {goal_weight} kg, "
+    f"Duration: {duration} weeks, Time per day: {daily_hours} hrs.\n\n"
+    f"Return ONLY the following JSON list format:\n"
+    f"[['Monday', '7 AM', 'Core'], ['Tuesday', '8 AM', 'Lower body'], ..., ['Sunday', 'Rest', 'No workout']]\n\n"
+    f"No explanation or markdown."
+)
+
+
+    model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+
+    try:
+        response = model.generate_content(prompt, generation_config={"temperature": 1.0})
+        content = response.parts[0].text.strip()
+        return json.loads(content)
+    except Exception as e:
+        print(f"Gemini routine fallback used due to: {e}")
+        return [
+            ['Monday', '7 AM', '20 min Cardio'],
+            ['Tuesday', '8 AM', 'Upper Body Workout'],
+            ['Wednesday', '7 AM', 'Yoga & Core'],
+            ['Thursday', '8 AM', 'Lower Body Workout'],
+            ['Friday', '7 AM', 'Stretch + Cardio'],
+            ['Saturday', '8 AM', 'Fun Activity or Walk'],
+            ['Sunday', 'Rest', 'Recovery Day'],
+        ]

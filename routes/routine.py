@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from models import db
 from models.routine import Routine
 from datetime import date
+from gemini import generate_routine_based_on_inputs
 
 routine_bp = Blueprint('routine', __name__, url_prefix='/routine')
 
@@ -16,31 +17,21 @@ def routine_input():
         if action == 'manual':
             return redirect(url_for('routine.manual_routine_input'))
 
-        # Suggested routine generation
+        # Get user inputs
         height = request.form.get('height')
         weight = request.form.get('weight')
         goal_weight = request.form.get('goal_weight')
         duration = int(request.form.get('duration'))
         daily_hours = int(request.form.get('daily_hours'))
 
-        # Hardcoded routine for now
-        sample = [
-            ['Monday', '7 AM', '20 min Cardio'],
-            ['Tuesday', '8 AM', 'Upper Body Workout'],
-            ['Wednesday', '7 AM', 'Yoga & Core'],
-            ['Thursday', '8 AM', 'Lower Body Workout'],
-            ['Friday', '7 AM', 'Stretch + Cardio'],
-            ['Saturday', '8 AM', 'Fun Activity or Walk'],
-            ['Sunday', 'Rest', 'Recovery Day'],
-        ]
+        # NEW: Generate with Gemini
+        sample = generate_routine_based_on_inputs(height, weight, goal_weight, duration, daily_hours)
 
         session['routine'] = sample
         session.modified = True
         return redirect(url_for('routine.view_custom_routine'))
 
     return render_template('routine/input.html')
-
-
 
 @routine_bp.route('/calendar')
 @login_required

@@ -43,20 +43,11 @@
             <div class="routine-box">
                 <h3>Latest Mood: {{ latest_mood.mood_type }} ({{ latest_mood.timestamp.strftime('%Y-%m-%d') }})</h3>
                 <p><strong>Suggested Routine:</strong><br>
-                {% if latest_mood.mood_type == 'Happy' %}
-                    10 Jumping Jacks, 10 Push-ups, 30s Plank
-                {% elif latest_mood.mood_type == 'Sad' %}
-                    10-min Walk, 15 Squats, 10 Deep Breaths
-                {% elif latest_mood.mood_type == 'Angry' %}
-                    10 Deep Breaths, 10 Lunges per leg, 5 Min Stretch
-                {% elif latest_mood.mood_type == 'Excited' %}
-                    20 Jumping Jacks, 15 High Knees, 20-sec Burpees
-                {% elif latest_mood.mood_type == 'Tired' %}
-                    10 Gentle Stretches, 30s Plank Hold, 5 Wall Sits
-                {% endif %}
+                {{ latest_mood.routine }}
                 </p>
             </div>
             {% endif %}
+
         </div>
     </div>
 </body>

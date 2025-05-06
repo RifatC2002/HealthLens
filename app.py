@@ -61,4 +61,4 @@ if __name__ == '__main__':
     os.makedirs('instance', exist_ok=True)
     with app.app_context():
         db.create_all()
-    app.run(port=1640, debug=True)
+    app.run(port=1063, debug=True)
