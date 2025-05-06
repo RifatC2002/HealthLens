@@ -2,14 +2,8 @@ from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
-
+import google.generativeai as genai
 from models import db
-#from routes.auth import auth_bp
-#from routes.main import main_bp
-#from routes.goal import goal_bp
-#from routes.challenge import challenge_bp
-#from routes.distraction import distraction_bp
-
 
 
 app = Flask(__name__)
@@ -37,18 +31,8 @@ from routes.finance import finance_bp
 from routes.microsave import microsave_bp
 from routes.social import social_bp
 from routes.streak import streak_bp
+from dotenv import load_dotenv
 
-
-
-#from models.user import User
-#from models import goal, exercise
-#from routes.mood import mood_bp
-#from routes.main import main_bp
-#from routes.routine import routine_bp
-#from routes.finance import finance_bp
-#from routes.microsave import microsave_bp
-#from routes.distraction import distraction_bp
-#from routes.social import social_bp
 
 app.register_blueprint(distraction_bp)  
 app.register_blueprint(routine_bp)
@@ -61,6 +45,9 @@ app.register_blueprint(finance_bp)
 app.register_blueprint(microsave_bp)
 app.register_blueprint(social_bp)
 app.register_blueprint(streak_bp)
+
+load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @login_manager.user_loader
 def load_user(user_id):
