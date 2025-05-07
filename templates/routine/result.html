@@ -5,20 +5,19 @@
     <aside class="styled-sidebar">
         <h2 class="sidebar-title">Routine</h2>
         <a href="{{ url_for('main.dashboard') }}" class="nav-btn">Dashboard</a>
-        <a href="{{ url_for('goal.view_goals') }}" class="nav-btn">Goals</a>
         <a href="{{ url_for('routine.routine_input') }}" class="nav-btn">Generate New</a>
-        <a href="{{ url_for('auth.logout') }}" class="nav-btn">Logout</a>
     </aside>
-    
 
     <main class="routine-main">
         <header class="routine-header">
-            <h2>Your Suggested Routine</h2>
+            <h2>Your Generated Routine</h2>
             <p class="routine-desc">Weekly breakdown based on your fitness goal</p>
         </header>
 
         {% if sample %}
-        <div class="routine-grid-cards" id="routine-container">
+        <div class="routine-grid-cards" id="routine-container"
+        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto;">
+
             {% for day, time, activity in sample %}
             <div class="routine-box-card" id="card-{{ loop.index0 }}">
                 <h4>{{ day }} – {{ time }}</h4>
@@ -29,21 +28,11 @@
             {% endfor %}
         </div>
         {% else %}
-        <p>No routine generated yet.</p>
+        <p style="color: #7efff5;">No routine generated yet.</p>
         {% endif %}
 
-        <div class="routine-box" style="margin-top: 40px;">
-            <h3><strong>Current Entries</strong></h3>
-            <div id="summary-list">
-                {% for day, time, activity in sample %}
-                <p id="summary-{{ loop.index0 }}"><strong>{{ day }}</strong> - {{ time }} → {{ activity }}</p>
-                {% endfor %}
-            </div>
-            <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">Back to dashboard</a>
-        </div>
     </main>
 </div>
-
 
 <script>
 function enableEdit(index) {

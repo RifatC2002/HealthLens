@@ -8,129 +8,146 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-
+    
         body {
             display: flex;
             height: 100vh;
             overflow: hidden;
+            background: linear-gradient(to bottom right, #0d0d0d, #1a1a1a);
+            color: #f0f0f0;
         }
-
+    
         .sidebar {
             width: 250px;
-            background-color: #1f1f2e;
-            color: #fff;
+            background: linear-gradient(to bottom,#1e1e1e, #eee7e7);
+            color: #515439;
             display: flex;
             flex-direction: column;
             padding: 30px 20px;
+            box-shadow: 4px 0 20px rgba(0, 255, 170, 0.05);
+            backdrop-filter: blur(6px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
         }
-
+    
         .logo {
             font-size: 22px;
             font-weight: bold;
             margin-bottom: 40px;
+            color: #7efff5;
         }
-
+    
         .nav-btn {
-            background: #28293d;
+            background: rgba(4, 102, 71, 0.729);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
-            padding: 12px 20px;
-            margin-bottom: 10px;
+            padding: 14px 20px;
+            margin-bottom: 12px;
+            font-size: 15px;
             text-align: left;
             text-decoration: none;
-            font-size: 15px;
-            transition: 0.3s ease;
-            display: block;
+            transition: all 0.3s ease;
         }
-
+    
         .nav-btn:hover {
-            background-color: #3f3f55;
+            background-color: rgba(61, 199, 187, 0.15);
+            transform: translateX(5px);
         }
-
+    
         .main-content {
             flex: 1;
-            background-color: #f5f6fa;
+            background: linear-gradient(to bottom, #161616, #222222);
             padding: 30px;
             overflow-y: auto;
         }
-
+    
         .top-section {
             margin-bottom: 30px;
         }
-
+    
         .top-section h2 {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: #eaff00;
         }
-
+    
         .card {
-            background-color: white;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 24px rgba(0, 255, 170, 0.08);
             margin-bottom: 20px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: transform 0.3s ease;
         }
-
+    
+        .card:hover {
+            transform: scale(1.02);
+        }
+    
         .card h3 {
             margin-bottom: 10px;
             font-size: 18px;
+            color: #7efff5;
         }
-
+    
         .card p {
-            color: #555;
+            color: #dcdcdc;
         }
-
+    
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
         }
-
+    
         a {
-            color: #28b485;
+            color: #7efff5;
             text-decoration: none;
         }
-
+    
         a:hover {
             text-decoration: underline;
+            color: #eaff00;
         }
-
+    
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
             }
-
+    
             .sidebar {
                 width: 100%;
                 flex-direction: row;
                 overflow-x: auto;
             }
-
+    
             .nav-btn {
                 flex: 1;
                 text-align: center;
             }
-
+    
             .main-content {
                 padding: 20px;
             }
         }
+    
         .card canvas {
             max-width: 100%;
             height: 280px;
         }
-
     </style>
+    
 </head>
 <body>
     <div class="sidebar">
         <a href="{{ url_for('goal.declare_goal') }}" class="nav-btn">Goals</a>
         <a href="{{ url_for('challenge.view_challenges') }}" class="nav-btn">Challenges</a>
-        <a href="{{ url_for('mood.adjust_mood') }}" class="nav-btn">Mood Routine</a>
+        <a href="{{ url_for('mood.adjust_mood') }}" class="nav-btn">Mood Tracker</a>
         <a href="{{ url_for('routine.routine_input') }}" class="nav-btn">Routine</a>
         <a href="{{ url_for('finance.view_finances') }}" class="nav-btn">Finance</a>
         <a href="{{ url_for('microsave.view_micro_savings') }}" class="nav-btn">Micro-Savings</a>

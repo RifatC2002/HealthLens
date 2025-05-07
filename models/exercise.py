@@ -9,3 +9,5 @@ class ExerciseChallenge(db.Model):
     description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    completed = db.Column(db.Boolean, default=False)
+

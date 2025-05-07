@@ -4,19 +4,77 @@
     <meta charset="UTF-8">
     <title>Exercise Challenges</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        async function generateChallenge() {
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.textContent = "Generating...";
+
+            const res = await fetch("{{ url_for('challenge.generate_challenge') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const data = await res.json();
+
+            btn.disabled = false;
+            btn.textContent = "Add Challenge";
+
+            if (data.status === "success") {
+                const exists = [...document.querySelectorAll(".goal-card h3")]
+                    .some(el => el.textContent.trim() === data.title);
+
+                if (!exists) {
+                    const container = document.getElementById("challenge-list");
+                    const card = document.createElement("div");
+                    card.className = "goal-card";
+                    card.innerHTML = `<h3>${data.title}</h3>
+                                      <p><strong>Description:</strong> ${data.description}</p>
+                                      <button onclick="completeChallenge(this)" data-id="${data.id}">Mark as Completed</button>`;
+                    container.prepend(card);
+                }
+            } else {
+                alert("Failed to generate challenge.");
+            }
+        }
+
+        async function completeChallenge(button) {
+            const id = button.getAttribute('data-id');
+
+            const baseUrl = "{{ url_for('challenge.complete_challenge', id=0) }}".replace(/0$/, '');
+            const url = `${baseUrl}${id}`;
+
+
+            const res = await fetch(url, {
+                method: "POST"
+            });
+
+            const data = await res.json();
+
+            if (data.status === "completed") {
+                button.parentElement.remove();
+            } else {
+                alert("Failed to mark challenge as completed.");
+            }
+        }
+
+    </script>
 </head>
 <body>
     <div class="container">
         <div class="left-panel">
-            <a href="{{ url_for('challenge.add_challenge') }}" class="dashboard-btn">Add New Challenge</a>
+            <button id="generate-btn" class="dashboard-btn" onclick="generateChallenge()">Add Challenge</button>
+
             <div class="left-column">
                 <h2>Gamified Exercise Challenges</h2>
                 {% if challenges %}
-                <div class="goal-list">
+                <div class="goal-list" id="challenge-list">
                     {% for challenge in challenges %}
                     <div class="goal-card">
                         <h3>{{ challenge.title }}</h3>
                         <p><strong>Description:</strong> {{ challenge.description }}</p>
+                        <button onclick="completeChallenge(this)" data-id="{{ challenge.id }}">Mark as Completed</button>
                     </div>
                     {% endfor %}
                 </div>

@@ -21,9 +21,15 @@ def view_streaks():
         Mood.user_id == current_user.id,
         Mood.timestamp >= today - timedelta(days=6)
     ).all()
-    mood_days = set(m.timestamp.date() for m in mood_entries)
-    mood_pct = round((len(mood_days) / 7) * 100)
-    mood_desc = f"You’ve checked in your mood {len(mood_days)} times this week."
+
+    # Count total entries (not distinct days)
+    mood_count = len(mood_entries)
+
+    # Percentage out of 7 assumed daily target
+    mood_pct = round((mood_count / 7) * 100)
+
+    # Updated description
+    mood_desc = f"You’ve checked in your mood {mood_count} time(s) this week."
 
     # === Goal Completion Streak ===
     recent_goals = Goal.query.filter_by(user_id=current_user.id).order_by(Goal.created_at.desc()).limit(7).all()
@@ -32,15 +38,21 @@ def view_streaks():
     goal_desc = f"You've completed your goals for {completed_goals} out of {len(recent_goals)} days this week!"
 
 
-    # === Challenge Streak ===
-    recent_challenges = ExerciseChallenge.query.filter_by(user_id=current_user.id).order_by(ExerciseChallenge.created_at.desc()).limit(7).all()
-    challenge_days = set(c.created_at.date() for c in recent_challenges if c.created_at.date() in week_days)
-    challenge_pct = round((len(challenge_days) / 7) * 100)
-    challenge_desc = f"You’ve completed challenges on {len(challenge_days)} days this week!"
+    recent_challenges = ExerciseChallenge.query.filter(
+        ExerciseChallenge.user_id == current_user.id,
+        ExerciseChallenge.created_at >= today - timedelta(days=6)
+    ).all()
 
-    # === Routine Follow-through (placeholder) ===
-    routine_pct = "Pending"  
-    routine_desc = "You followed through on X days’ worth of routines." 
+    challenge_count = sum(1 for c in recent_challenges if c.completed)
+    total_generated = len(recent_challenges)
+
+    challenge_pct = round((challenge_count / total_generated) * 100) if total_generated else 0
+    challenge_desc = f"You’ve completed {challenge_count} out of {total_generated} challenges this week!"
+
+
+
+
+ 
 
     streaks = [
         {
@@ -52,11 +64,6 @@ def view_streaks():
             "title": "Mood Check-In Streak",
             "percentage": mood_pct,
             "description": mood_desc
-        },
-        {
-            "title": "Routine Follow-Through",
-            "percentage": routine_pct,
-            "description": routine_desc
         },
         {
             "title": "Exercise Challenge Streak",

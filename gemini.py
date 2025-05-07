@@ -84,3 +84,27 @@ def generate_routine_based_on_inputs(height, weight, goal_weight, duration, dail
             ['Saturday', '8 AM', 'Fun Activity or Walk'],
             ['Sunday', 'Rest', 'Recovery Day'],
         ]
+
+
+def generate_fitness_challenge():
+    prompt = (
+            "Generate a fitness challenge which might be useful for a beginner level user. "
+            "Make sure the title and description is different from the previous responses. "
+            "Respond only in JSON format: {\"title\": \"...\", \"description\": \"...\"}. "
+            "Avoid repeating phrases or names. No explanation or markdown."
+        )
+
+    try:
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
+        response = model.generate_content(prompt, generation_config={"temperature": 1.0})
+        content = response.candidates[0].content.parts[0].text.strip()
+        start = content.find("{")
+        end = content.rfind("}")
+        if start != -1 and end != -1:
+            return json.loads(content[start:end + 1])
+    except Exception as e:
+        print("Challenge generation fallback:", e)
+        return {
+            "title": "Jumping Jacks Blast",
+            "description": "Do 30 jumping jacks to get your heart rate up!"
+        }
