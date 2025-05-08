@@ -13,11 +13,12 @@
                 <h2>My Finance Records</h2>
                 <p><strong>Total Income:</strong> {{ total_income }} BDT</p>
                 <p><strong>Total Expenses:</strong> {{ total_expense }} BDT</p>
-                <p><strong>Current Savings:</strong> {{ savings }} BDT</p>
-                
-                
+                <p><strong>Net Balance:</strong> {{ net_balance }} BDT</p>
+               
+               
             </div>
         </div>
+
 
         <div class="right-panel">
             <h2>Track Your Finances</h2>
@@ -39,7 +40,7 @@
                 <p>No finance records yet.</p>
                 {% endif %}
                 <a href="{{ url_for('main.dashboard') }}" class="back-dashboard-btn">← Back to Dashboard</a>
-            
+           
         </div>
     </div>
 </body>
