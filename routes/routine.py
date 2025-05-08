@@ -21,11 +21,19 @@ def routine_input():
         height = request.form.get('height')
         weight = request.form.get('weight')
         goal_weight = request.form.get('goal_weight')
-        duration = int(request.form.get('duration'))
-        daily_hours = int(request.form.get('daily_hours'))
+        # Get values safely
+        duration = int(request.form.get('duration') or 0)
+        duration2 = request.form.get('duration2')
+        daily_hours = int(request.form.get('daily_hours') or 0)
+
+        if duration2 is None or duration2.strip() == '':
+            duration2 = 0
+        else:
+            duration2 = int(duration2)
+      
 
         # NEW: Generate with Gemini
-        sample = generate_routine_based_on_inputs(height, weight, goal_weight, duration, daily_hours)
+        sample = generate_routine_based_on_inputs(height, weight, goal_weight, duration, duration2, daily_hours)
 
         session['routine'] = sample
         session.modified = True

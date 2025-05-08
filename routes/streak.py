@@ -22,13 +22,8 @@ def view_streaks():
         Mood.timestamp >= today - timedelta(days=6)
     ).all()
 
-    # Count total entries (not distinct days)
     mood_count = len(mood_entries)
-
-    # Percentage out of 7 assumed daily target
     mood_pct = round((mood_count / 7) * 100)
-
-    # Updated description
     mood_desc = f"You’ve checked in your mood {mood_count} time(s) this week."
 
     # === Goal Completion Streak ===

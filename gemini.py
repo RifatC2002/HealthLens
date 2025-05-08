@@ -54,13 +54,14 @@ def get_mood_routine(mood):
     except Exception:
         return "10-min walk, 15 squats, 5 deep breaths"
 
-def generate_routine_based_on_inputs(height, weight, goal_weight, duration, daily_hours):
+def generate_routine_based_on_inputs(height, weight, goal_weight, duration, duration2, daily_hours):
     import json
 
     prompt = (
     f"You're a fitness coach. Generate a 7-day workout routine based on:\n"
     f"Height: {height} cm, Weight: {weight} kg, Goal: {goal_weight} kg, "
-    f"Duration: {duration} weeks, Time per day: {daily_hours} hrs.\n\n"
+    f"Duration: {duration} weeks, Duration2: {duration2} weeks, "
+    f"Time per day: {daily_hours} hrs.\n\n"
     f"Return ONLY the following JSON list format:\n"
     f"[['Monday', '7 AM', 'Core'], ['Tuesday', '8 AM', 'Lower body'], ..., ['Sunday', 'Rest', 'No workout']]\n\n"
     f"No explanation or markdown."
